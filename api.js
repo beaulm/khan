@@ -1,3 +1,13 @@
+function newBlock(statement) {
+  if(statement.hasOwnProperty('body')) {
+    return statement.body;
+  }
+  if(statement.hasOwnProperty('consequent') && statement.consequent.hasOwnProperty('type') && statement.consequent.type === 'BlockStatement' && statement.consequent.hasOwnProperty('body')) {
+    return statement.consequent;
+  }
+  return false;
+}
+
 module.exports = {
   mustContain: function(codeTree, functionality) {
     function searchForFunctionality(code) {
@@ -14,13 +24,8 @@ module.exports = {
         });
 
         //If the current functionality creates new block scope
-        if(statement.hasOwnProperty('body')) {
-          //Check that for matching statements as well (recursion)
-          searchForFunctionality(statement.body);
-        }
-        if(statement.hasOwnProperty('consequent') && statement.consequent.hasOwnProperty('type') && statement.consequent.type === 'BlockStatement' && statement.consequent.hasOwnProperty('body')) {
-          //Check that for matching statements as well (recursion)
-          searchForFunctionality(statement.consequent);
+        if(newBlock(statement) !== false) {
+          searchForFunctionality(newBlock(statement));
         }
       });
     }
@@ -52,13 +57,8 @@ module.exports = {
         }
 
         //If the current functionality creates new block scope
-        if(code.body[i].hasOwnProperty('body')) {
-          //Check that for matching statements as well (recursion)
-          return searchForFunctionality(code.body[i].body);
-        }
-        if(code.body[i].hasOwnProperty('consequent') && code.body[i].consequent.hasOwnProperty('type') && code.body[i].consequent.type === 'BlockStatement' && code.body[i].consequent.hasOwnProperty('body')) {
-          //Check that for matching statements as well (recursion)
-          return searchForFunctionality(code.body[i].consequent);
+        if(newBlock(code.body[i]) !== false) {
+          return searchForFunctionality(newBlock(code.body[i]));
         }
       }
 
@@ -69,35 +69,35 @@ module.exports = {
   },
 
   matchesStructure: function(userCode, testCode) {
-    var testCodeIndex = 0;
-
     //Recursively go through each statement in the user code
-    function searchForFunctionality(code) {
-      var numberOfStatements = code.body.length;
+    function searchForFunctionality(uCode, tCode) {
+      var codeIndex = 0;
+      var numberOfStatements = uCode.body.length;
       for(var i=0; i<numberOfStatements; i++) {
         //If it matches whatever we're looking for in the test code
-        if(code.body[i].type === testCode.body[testCodeIndex].type) {
+        if(uCode.body[i].type === tCode.body[codeIndex].type) {
           //Move on to the next thing in the test code
-          testCodeIndex++;
+          codeIndex++;
 
-          if(testCodeIndex === testCode.body.length) {
+          if(codeIndex === tCode.body.length) {
             return true;
           }
+
+          if(newBlock(tCode.body[codeIndex]) === false) {
+            return true;
+          }
+          tCode = newBlock(tCode.body[codeIndex]);
+          codeIndex = 0;
         }
 
-        // If the current functionality creates new block scope
-        if(code.body[i].hasOwnProperty('body')) {
-          //Check that for matching statements as well (recursion)
-          return searchForFunctionality(code.body[i].body);
-        }
-        if(code.body[i].hasOwnProperty('consequent') && code.body[i].consequent.hasOwnProperty('type') && code.body[i].consequent.type === 'BlockStatement' && code.body[i].consequent.hasOwnProperty('body')) {
-          //Check that for matching statements as well (recursion)
-          return searchForFunctionality(code.body[i].consequent);
+        //If the current functionality creates new block scope
+        if(newBlock(uCode.body[i]) !== false) {
+          return searchForFunctionality(newBlock(uCode.body[i]), tCode);
         }
       }
       return false;
     }
 
-    return searchForFunctionality(userCode);
+    return searchForFunctionality(userCode, testCode);
   }
 }
