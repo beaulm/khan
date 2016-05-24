@@ -69,35 +69,82 @@ module.exports = {
   },
 
   matchesStructure: function(userCode, testCode) {
-    //Recursively go through each statement in the user code
-    function searchForFunctionality(uCode, tCode) {
-      var codeIndex = 0;
-      var numberOfStatements = uCode.body.length;
-      for(var i=0; i<numberOfStatements; i++) {
-        //If it matches whatever we're looking for in the test code
-        if(uCode.body[i].type === tCode.body[codeIndex].type) {
-          //Move on to the next thing in the test code
-          codeIndex++;
+    var indexes = [0];
 
-          if(codeIndex === tCode.body.length) {
-            return true;
-          }
-
-          if(newBlock(tCode.body[codeIndex]) === false) {
-            return true;
-          }
-          tCode = newBlock(tCode.body[codeIndex]);
-          codeIndex = 0;
+    function getStatemntAt(indexList) {
+      var statement = testCode.body;
+      for(var a=0; a<indexList.length; a++) {
+        if(statement.hasOwnProperty('consequent')) {
+          statement = statement.consequent.body;
         }
-
-        //If the current functionality creates new block scope
-        if(newBlock(uCode.body[i]) !== false) {
-          return searchForFunctionality(newBlock(uCode.body[i]), tCode);
+        else if(statement.hasOwnProperty('body')) {
+          statement = statement.body.body;
         }
+        statement = statement[indexList[a]];
+      }
+      return statement;
+    }
+
+    function getArrayAt(indexList) {
+      var statement = testCode.body;
+      for(var a=0; a<indexList.length; a++) {
+        statement = statement[indexList[a]];
+        if(statement.hasOwnProperty('consequent')) {
+          statement = statement.consequent;
+        }
+        else if(statement.hasOwnProperty('body')) {
+          statement = statement.body;
+        }
+      }
+      return statement;
+    }
+
+    function advanceCurrentStatement() {
+      var currentStatement = getStatemntAt(indexes);
+      var tmpArray = indexes.slice(0, -1);
+      if(tmpArray.length === 0) {
+        return true;
+      }
+      var parentArray = getArrayAt(tmpArray);
+      //If we can go further down the tree
+      if(currentStatement.hasOwnProperty('consequent') || currentStatement.hasOwnProperty('body')) {
+        indexes.push(0);
+      }
+      //If we can move on to the next sibling
+      else if(parentArray.body.length < (indexes[indexes.length-1]+1)) {
+        indexes[indexes.length-1]++;
+      }
+      //Otherwise, advance the parent
+      else {
+        indexes.pop();
+        if(indexes.length === 1) {
+          return true;
+        }
+        advanceCurrentStatement();
       }
       return false;
     }
 
-    return searchForFunctionality(userCode, testCode);
+    //Recursively go through each statement in the user code
+    function searchForFunctionality(uCode) {
+      var numberOfStatements = uCode.body.length;
+      var currentStatement = getStatemntAt(indexes);
+      for(var i=0; i<numberOfStatements; i++) {
+        //If it matches whatever we're looking for in the test code
+        if(uCode.body[i].type === currentStatement.type) {
+          if(advanceCurrentStatement()) {
+            return true;
+          }
+        }
+        //If the current functionality creates new block scope
+        if(newBlock(uCode.body[i]) !== false) {
+          return searchForFunctionality(newBlock(uCode.body[i]));
+        }
+      }
+      indexes.pop();
+      return false;
+    }
+
+    return searchForFunctionality(userCode);
   }
 }

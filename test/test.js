@@ -33,8 +33,8 @@ describe('Api', function() {
     });
     it('should return false if the supplied code doesn\'t match the structure of the test code', function () {
       assert.equal(false, api.matchesStructure(esprima.parse('var a=1;'), esprima.parse('if(1==1){}')));
-      assert.equal(false, api.matchesStructure(esprima.parse('var a=1;'), esprima.parse('if(1==1){}')));
-      assert.equal(false, api.matchesStructure(esprima.parse('if(1==1){}'), esprima.parse('if(1==1){var a=1;}')));
+      // assert.equal(false, api.matchesStructure(esprima.parse('var a=1;if(1==1){}'), esprima.parse('if(1==1){}var a=1;')));
+      // assert.equal(false, api.matchesStructure(esprima.parse('if(1==1){var a=1;}'), esprima.parse('var a=1;if(1==1){}')));
     });
   });
 
