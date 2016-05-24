@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>26/26</span>
+        <span class='fraction'>79/79</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">97.62% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>16/16</span>
+        <span class='fraction'>41/42</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>6/6</span>
+        <span class='fraction'>13/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>26/26</span>
+        <span class='fraction'>79/79</span>
       </div>
     </div>
   </div>
@@ -109,7 +109,108 @@
 64
 65
 66
-67</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,12 +227,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,22 +246,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -175,71 +270,249 @@
 <span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = {
-    mustContain: function(codeTree, functionality) {
-      function searchForFunctionality(code) {
-        //Go through each statement
-        code.body.forEach(function(statement){
-          //Go through the list of functionality that still needs to be found
-          functionality = functionality.filter(function(specificFunctionality){
-            //If the current statment matches the current functionality
-            if(statement.type === specificFunctionality) {
-              //Remove it from the list of functionality we still need to find
-              return false;
-            }
-            return true;
-          });
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">function newBlock(statement) {
+  if(statement.hasOwnProperty('body')) {
+    return statement.body;
+  }
+  if(statement.hasOwnProperty('consequent') &amp;&amp; statement.consequent.hasOwnProperty('type') &amp;&amp; statement.consequent.type === 'BlockStatement' &amp;&amp; statement.consequent.hasOwnProperty('body')) {
+    return statement.consequent;
+  }
+  return false;
+}
 &nbsp;
-          //If the current functionality creates new block scope
-          if(statement.hasOwnProperty('body')) {
-            //Check that for matching statements as well (recursion)
-            searchForFunctionality(statement.body);
+module.exports = {
+  mustContain: function(codeTree, functionality) {
+    function searchForFunctionality(code) {
+      //Go through each statement
+      code.body.forEach(function(statement){
+        //Go through the list of functionality that still needs to be found
+        functionality = functionality.filter(function(specificFunctionality){
+          //If the current statment matches the current functionality
+          if(statement.type === specificFunctionality) {
+            //Remove it from the list of functionality we still need to find
+            return false;
           }
-          if(statement.hasOwnProperty('consequent') &amp;&amp; statement.consequent.hasOwnProperty('type') &amp;&amp; statement.consequent.type === 'BlockStatement' &amp;&amp; statement.consequent.hasOwnProperty('body')) {
-            //Check that for matching statements as well (recursion)
-            searchForFunctionality(statement.consequent);
-          }
+          return true;
         });
-      }
 &nbsp;
-      searchForFunctionality(codeTree);
+        //If the current functionality creates new block scope
+        if(newBlock(statement) !== false) {
+          searchForFunctionality(newBlock(statement));
+        }
+      });
+    }
 &nbsp;
-      //If the list of functionality still to find is zero
-      if(functionality.length === 0) {
-        //Return true (we found everything!)
-        return true;
-      }
-      //Otherwise return false (we didn't find everything :( )
-      return false;
-    },
+    searchForFunctionality(codeTree);
 &nbsp;
-    cantContain: function(codeTree, functionality) {
-      function searchForFunctionality(code) {
-        //Go through each statement
-        var numberOfStatements = code.body.length-1;
-        for(var i=numberOfStatements; i&gt;=0; i--) {
-          //Go through the list of banned functionality
-          var sizeOfFunctionalityList = functionality.length-1;
-          for(var j=sizeOfFunctionalityList; j&gt;=0; j--) {
-            //If the current statment matches the current functionality
-            if(code.body[i].type === functionality[j]) {
-              //Stop looking, we've found something
-              return false;
-            }
-          }
+    //If the list of functionality still to find is zero
+    if(functionality.length === 0) {
+      //Return true (we found everything!)
+      return true;
+    }
+    //Otherwise return false (we didn't find everything :( )
+    return false;
+  },
 &nbsp;
-          //If the current functionality creates new block scope
-          if(code.body[i].hasOwnProperty('body')) {
-            //Check that for matching statements as well (recursion)
-            return searchForFunctionality(code.body[i].body);
+  cantContain: function(codeTree, functionality) {
+    function searchForFunctionality(code) {
+      //Go through each statement
+      var numberOfStatements = code.body.length;
+      for(var i=0; i&lt;numberOfStatements; i++) {
+        //Go through the list of banned functionality
+        var sizeOfFunctionalityList = functionality.length;
+        for(var j=0; j&lt;sizeOfFunctionalityList; j++) {
+          //If the current statment matches the current functionality
+          if(code.body[i].type === functionality[j]) {
+            //Stop looking, we've found something
+            return false;
           }
         }
 &nbsp;
-        return true;
+        //If the current functionality creates new block scope
+        if(newBlock(code.body[i]) !== false) {
+          return searchForFunctionality(newBlock(code.body[i]));
+        }
       }
 &nbsp;
-      return searchForFunctionality(codeTree);
+      return true;
     }
+&nbsp;
+    return searchForFunctionality(codeTree);
+  },
+&nbsp;
+  matchesStructure: function(userCode, testCode) {
+    var indexes = [0];
+&nbsp;
+    function getStatemntAt(indexList) {
+      var statement = testCode.body;
+      for(var a=0; a&lt;indexList.length; a++) {
+        if(statement.hasOwnProperty('consequent')) {
+          statement = statement.consequent.body;
+        }
+        else if(statement.hasOwnProperty('body')) {
+          statement = statement.body.body;
+        }
+        statement = statement[indexList[a]];
+      }
+      return statement;
+    }
+&nbsp;
+    function getArrayAt(indexList) {
+      var statement = testCode.body;
+      for(var a=0; a&lt;indexList.length; a++) {
+        statement = statement[indexList[a]];
+        if(statement.hasOwnProperty('consequent')) {
+          statement = statement.consequent;
+        }
+        else <span class="missing-if-branch" title="else path not taken" >E</span>if(statement.hasOwnProperty('body')) {
+          statement = statement.body;
+        }
+      }
+      return statement;
+    }
+&nbsp;
+    function rollUp() {
+      if(indexes.length === 1) {
+        var parentArray = testCode;
+      }
+      else {
+        var tmpArray = indexes.slice(0, -1);
+        var parentArray = getArrayAt(tmpArray);
+      }
+      if(parentArray.body.length &gt; (indexes[indexes.length-1]+1)) {
+        indexes[indexes.length-1]++;
+        return false;
+      }
+      else {
+        indexes.pop();
+        if(indexes.length === 0) {
+          return true;
+        }
+        return rollUp();
+      }
+    }
+&nbsp;
+    function advanceCurrentStatement() {
+      //Check if we can go further down the tree
+      var currentStatement = getStatemntAt(indexes);
+      if(currentStatement.hasOwnProperty('consequent') || currentStatement.hasOwnProperty('body')) {
+        indexes.push(0);
+        return false;
+      }
+&nbsp;
+      //Check if we can move on to the next sibling or up to the next parent
+      return rollUp();
+    }
+&nbsp;
+    //Recursively go through each statement in the user code
+    function searchForFunctionality(uCode) {
+      var numberOfStatements = uCode.body.length;
+      var currentStatement = getStatemntAt(indexes);
+      for(var i=0; i&lt;numberOfStatements; i++) {
+        //If it matches whatever we're looking for in the test code
+        if(uCode.body[i].type === currentStatement.type) {
+          if(advanceCurrentStatement()) {
+            return true;
+          }
+        }
+        //If the current functionality creates new block scope
+        if(newBlock(uCode.body[i]) !== false) {
+          return searchForFunctionality(newBlock(uCode.body[i]));
+        }
+      }
+      indexes.pop();
+      return false;
+    }
+&nbsp;
+    return searchForFunctionality(userCode);
+  }
 }
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -247,7 +520,7 @@
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon May 23 2016 02:02:33 GMT-0500 (CDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue May 24 2016 00:04:46 GMT-0500 (CDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

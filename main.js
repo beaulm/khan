@@ -10,6 +10,6 @@ editor.getSession().setMode('ace/mode/javascript');
 editor.setTheme('ace/theme/monokai');
 editor.getSession().on('change', debounce(function(){
   try {
-    console.log(api.matchesStructure(esprima.parse(editor.getValue()), esprima.parse('var a=1;if(1==1){}')));
+    console.log(api.matchesStructure(esprima.parse(editor.getValue()), esprima.parse('for(var i=0;i<10;i++){}')));
   } catch (e) {}
 }, 811));

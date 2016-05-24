@@ -99,30 +99,37 @@ module.exports = {
       return statement;
     }
 
-    function advanceCurrentStatement() {
-      var currentStatement = getStatemntAt(indexes);
-      var tmpArray = indexes.slice(0, -1);
-      if(tmpArray.length === 0) {
-        return true;
+    function rollUp() {
+      if(indexes.length === 1) {
+        var parentArray = testCode;
       }
-      var parentArray = getArrayAt(tmpArray);
-      //If we can go further down the tree
-      if(currentStatement.hasOwnProperty('consequent') || currentStatement.hasOwnProperty('body')) {
-        indexes.push(0);
+      else {
+        var tmpArray = indexes.slice(0, -1);
+        var parentArray = getArrayAt(tmpArray);
       }
-      //If we can move on to the next sibling
-      else if(parentArray.body.length < (indexes[indexes.length-1]+1)) {
+      if(parentArray.body.length > (indexes[indexes.length-1]+1)) {
         indexes[indexes.length-1]++;
+        return false;
       }
-      //Otherwise, advance the parent
       else {
         indexes.pop();
-        if(indexes.length === 1) {
+        if(indexes.length === 0) {
           return true;
         }
-        advanceCurrentStatement();
+        return rollUp();
       }
-      return false;
+    }
+
+    function advanceCurrentStatement() {
+      //Check if we can go further down the tree
+      var currentStatement = getStatemntAt(indexes);
+      if(currentStatement.hasOwnProperty('consequent') || currentStatement.hasOwnProperty('body')) {
+        indexes.push(0);
+        return false;
+      }
+
+      //Check if we can move on to the next sibling or up to the next parent
+      return rollUp();
     }
 
     //Recursively go through each statement in the user code
