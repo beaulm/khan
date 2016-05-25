@@ -1,3 +1,5 @@
+var esprima = require('esprima');
+
 //Check if the current statement creates new block scope
 function newBlock(statement) {
   if(statement.hasOwnProperty('body')) {
@@ -18,8 +20,15 @@ module.exports = {
   *
   * @return {bool} - True IFF the code contains ALL the listed functionality
   */
-  mustContain: function(codeTree, functionality) {
-    if((typeof codeTree !== 'object' && codeTree.constructor !== Array) || functionality.constructor !== Array) {
+  mustContain: function(code, functionality) {
+    if(typeof code !== 'string' || functionality.constructor !== Array) {
+      return false;
+    }
+
+    //Try to parse the submitted code
+    try {
+      var codeTree = esprima.parse(code);
+    } catch (e) {
       return false;
     }
 
@@ -62,8 +71,15 @@ module.exports = {
   *
   * @return {bool} - True IFF the code contains NONE the listed functionality
   */
-  cantContain: function(codeTree, functionality) {
-    if((typeof codeTree !== 'object' && codeTree.constructor !== Array) || functionality.constructor !== Array) {
+  cantContain: function(code, functionality) {
+    if(typeof code !== 'string' || functionality.constructor !== Array) {
+      return false;
+    }
+
+    //Try to parse the submitted code
+    try {
+      var codeTree = esprima.parse(code);
+    } catch (e) {
       return false;
     }
 
@@ -102,7 +118,15 @@ module.exports = {
   * @return {bool} - True if userCode is a superset of testCode (extra statments in userCode don't matter)
   */
   matchesStructure: function(userCode, testCode) {
-    if((typeof userCode !== 'object' && userCode.constructor !== Array) || (typeof testCode !== 'object' && testCode.constructor !== Array)) {
+    if(typeof userCode !== 'string' || typeof testCode !== 'string') {
+      return false;
+    }
+
+    //Try to parse the submitted code
+    try {
+      userCode = esprima.parse(userCode);
+      testCode = esprima.parse(testCode);
+    } catch (e) {
       return false;
     }
 

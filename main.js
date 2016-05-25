@@ -1,5 +1,4 @@
 var debounce = require('lodash.debounce');
-var esprima = require('esprima');
 var ace = require('brace');
 require('brace/mode/javascript');
 require('brace/theme/monokai');
@@ -14,9 +13,9 @@ editor.setTheme('ace/theme/monokai');
 function checkCode(){
   try {
     var checks = {
-      mustContain: function(){return api.mustContain(esprima.parse(editor.getValue()), document.getElementById('mustContain').value.split())},
-      cantContain: function(){return api.cantContain(esprima.parse(editor.getValue()), document.getElementById('cantContain').value.split())},
-      matchesStructure: function(){return api.matchesStructure(esprima.parse(editor.getValue()), esprima.parse(document.getElementById('matchesStructure').value))}
+      mustContain: function(){return api.mustContain(editor.getValue(), document.getElementById('mustContain').value.split())},
+      cantContain: function(){return api.cantContain(editor.getValue(), document.getElementById('cantContain').value.split())},
+      matchesStructure: function(){return api.matchesStructure(editor.getValue(), document.getElementById('matchesStructure').value)}
     };
     for(var key in checks) {
       //Reset the status indicator

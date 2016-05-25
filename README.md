@@ -15,5 +15,6 @@
   * Make textarea rich text as well
 * Efficiency
   * Major gains could likely be made in the api, including using a more efficient search method than recursion
-* Flexibility
+* Functionality
   * Instead of a flat list of ESTree AST node types, it would be cool to accept a full javascript object for Must Contain and Can't Contain which allowed for all the logical operators (code should contain `this` and `this` or `that` and not `other`).
+  * The API could return response objects instead of just booleans, explaining why a test passed or failed.
