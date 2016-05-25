@@ -19,6 +19,10 @@ module.exports = {
   * @return {bool} - True IFF the code contains ALL the listed functionality
   */
   mustContain: function(codeTree, functionality) {
+    if((typeof codeTree !== 'object' && codeTree.constructor !== Array) || functionality.constructor !== Array) {
+      return false;
+    }
+
     function searchForFunctionality(code) {
       //Go through each statement
       code.body.forEach(function(statement){
@@ -59,6 +63,10 @@ module.exports = {
   * @return {bool} - True IFF the code contains NONE the listed functionality
   */
   cantContain: function(codeTree, functionality) {
+    if((typeof codeTree !== 'object' && codeTree.constructor !== Array) || functionality.constructor !== Array) {
+      return false;
+    }
+
     function searchForFunctionality(code) {
       //Go through each statement
       var numberOfStatements = code.body.length;
@@ -94,6 +102,10 @@ module.exports = {
   * @return {bool} - True if userCode is a superset of testCode (extra statments in userCode don't matter)
   */
   matchesStructure: function(userCode, testCode) {
+    if((typeof userCode !== 'object' && userCode.constructor !== Array) || (typeof testCode !== 'object' && testCode.constructor !== Array)) {
+      return false;
+    }
+
     //The indexes variable stores an array of which statment number we're current inspecting at each level of the tree
     var indexes = [0];
     //This normailizes the code to test against so traversing it doesn't have a weird edge condition at the beginning
