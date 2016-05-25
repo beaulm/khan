@@ -15,7 +15,7 @@ module.exports = {
   /**
   * @desc mustContain() Checks if a code tree contains all the functionality in a given array
   *
-  * @param {json} [codeTree] - Code you'd like to test against in ESTree AST format
+  * @param {string} [code] - Code you'd like to test against in ESTree AST format
   * @param {array} [functionality] - Array of builder objects you'd like to check the code for
   *
   * @return {bool} - True IFF the code contains ALL the listed functionality
@@ -66,7 +66,7 @@ module.exports = {
   /**
   * @desc cantContain() Checks if a code tree contains any of the functionality in a given array
   *
-  * @param {json} [codeTree] - Code you'd like to test against in ESTree AST format
+  * @param {string} [code] - Code you'd like to test against in ESTree AST format
   * @param {array} [functionality] - Array of builder objects you'd like to check the code for
   *
   * @return {bool} - True IFF the code contains NONE the listed functionality
@@ -99,7 +99,9 @@ module.exports = {
 
         //If the current functionality creates new block scope
         if(newBlock(code.body[i]) !== false) {
-          return searchForFunctionality(newBlock(code.body[i]));
+          if(!searchForFunctionality(newBlock(code.body[i]))) {
+            return false;
+          }
         }
       }
 
@@ -112,8 +114,8 @@ module.exports = {
   /**
   * @desc matchesStructure() Checks if one block of code contains the same structure as another
   *
-  * @param {json} [userCode] - Code which must contain a certain structure ESTree AST format
-  * @param {json} [testCode] - Code used to match the structure of the other block of code ESTree AST format
+  * @param {string} [userCode] - Code which must contain a certain structure ESTree AST format
+  * @param {string} [testCode] - Code used to match the structure of the other block of code ESTree AST format
   *
   * @return {bool} - True if userCode is a superset of testCode (extra statments in userCode don't matter)
   */
@@ -150,7 +152,7 @@ module.exports = {
       return statement;
     }
 
-    //Take a portion of our index list and returns an array of statements
+    //Takes a portion of our index list and returns an array of statements
     function getArrayAt(indexList) {
       var statement = newTestCode;
       for(var a=0; a<(indexList.length-1); a++) {
