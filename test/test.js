@@ -31,11 +31,14 @@ describe('Api', function() {
       assert.equal(true, api.matchesStructure(esprima.parse('var a=1;'), esprima.parse('var a=1;')));
       assert.equal(true, api.matchesStructure(esprima.parse('if(1==1){var a=1;}'), esprima.parse('if(1==1){var a=1;}')));
       assert.equal(true, api.matchesStructure(esprima.parse('for(var i=0;i<10;i++){var a=0}'), esprima.parse('for(var i=0;i<10;i++){var a=0}')));
+      assert.equal(true, api.matchesStructure(esprima.parse('for(var i=0;i<10;i++){for(var j=0;j<10;j++){var a=0}}'), esprima.parse('for(var i=0;i<10;i++){for(var j=0;j<10;j++){var a=0}}')));
+      assert.equal(true, api.matchesStructure(esprima.parse('if(1==1){for(var j=0;j<10;j++){var a=0}}'), esprima.parse('if(1==1){for(var j=0;j<10;j++){var a=0}}')));
+      assert.equal(true, api.matchesStructure(esprima.parse('for(var i=0;i<10;i++){if(1==1){var a=0}}'), esprima.parse('for(var i=0;i<10;i++){if(1==1){var a=0}}')));
     });
     it('should return false if the supplied code doesn\'t match the structure of the test code', function () {
       assert.equal(false, api.matchesStructure(esprima.parse('var a=1;'), esprima.parse('if(1==1){}')));
       assert.equal(false, api.matchesStructure(esprima.parse('var a=1;if(1==1){}'), esprima.parse('if(1==1){}var a=1;')));
-      assert.equal(false, api.matchesStructure(esprima.parse('if(1==1){var a=1;}'), esprima.parse('var a=1;if(1==1){}')));
+      assert.equal(false, api.matchesStructure(esprima.parse('var a=1;if(1==1){}'), esprima.parse('if(1==1){var a=1;}')));
     });
   });
 

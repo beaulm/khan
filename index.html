@@ -6,15 +6,82 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <style media="screen">
+			html, body {
+				color: #2D2E2E;
+				font-family: "Trebuchet MS", Geneva, Tahoma, Arial, sans-serif;
+				font-size: small;
+				height: 100%;
+				line-height: 1.8;
+				margin: auto;
+				width: 100%;
+			}
+
       #editor {
-        position: relative;;
-        width: 500px;
-        height: 400px;
+				float: left;
+        height: 90%;
+				margin: 1.38em 1.23em 2.08em 1.23em;
+        position: relative;
+        width: 45%;
       }
+
+			#results {
+				float: left;
+				margin: 1.38em 1.23em 2.08em 1.23em;
+				width: 45%;
+			}
+
+			.resultIndicator {
+				-moz-border-radius: 1.77em;
+			  -webkit-border-radius: 1.77em;
+			  border-radius: 1.77em;
+				float: left;
+				height: 1.77em;
+				margin-right: .5em;
+				width: 1.77em;
+			}
+
+			.failing {
+				background-color: #F00;
+			}
+
+			.passing {
+				background-color: #0F0;
+			}
+
+			#results label {
+				display: block;
+				float: left;
+				width: 9em;
+			}
+
+			#results input {
+				margin-bottom: 3em;
+			}
     </style>
 	</head>
 	<body>
     <div id="editor"></div>
+		<div id="results">
+			<form id="settings" name="settings">
+				<div id="mustContainStatus" class="resultIndicator"></div>
+				<label for="mustContain">Must contain:</label>
+				<input id="mustContain" class="inputElement" name="mustContain" type="text" placeholder="VariableDeclaration" size="52" />
+				<br />
+				<div id="cantContainStatus" class="resultIndicator"></div>
+				<label for="cantContain">Can't contain:</label>
+				<input id="cantContain" class="inputElement" name="cantContain" type="text" placeholder="WhileStatement" size="52" />
+				<br />
+				<div id="matchesStructureStatus" class="resultIndicator"></div>
+				<label for="matchesStructure">Match structure:</label>
+				<textarea id="matchesStructure" class="inputElement" name="matchesStructure" rows="15" cols="50">
+for(var i=0; i&lt;10; i++) {
+	if(i==7) {
+		console.log(&#39;We found the lucky number&#39;);
+	}
+}
+				</textarea>
+			</form>
+		</div>
     <script src="./bundle.js"></script>
 	</body>
 </html>

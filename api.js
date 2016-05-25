@@ -70,9 +70,10 @@ module.exports = {
 
   matchesStructure: function(userCode, testCode) {
     var indexes = [0];
+    var newTestCode = {body: testCode};
 
     function getStatemntAt(indexList) {
-      var statement = testCode.body;
+      var statement = newTestCode.body.body;
       for(var a=0; a<indexList.length; a++) {
         if(statement.hasOwnProperty('consequent')) {
           statement = statement.consequent.body;
@@ -86,22 +87,28 @@ module.exports = {
     }
 
     function getArrayAt(indexList) {
-      var statement = testCode.body;
-      for(var a=0; a<indexList.length; a++) {
-        statement = statement[indexList[a]];
+      var statement = newTestCode;
+      for(var a=0; a<(indexList.length-1); a++) {
         if(statement.hasOwnProperty('consequent')) {
-          statement = statement.consequent;
+          statement = statement.consequent.body;
         }
         else if(statement.hasOwnProperty('body')) {
-          statement = statement.body;
+          statement = statement.body.body;
         }
+        statement = statement[indexList[a]];
+      }
+      if(statement.hasOwnProperty('consequent')) {
+        statement = statement.consequent;
+      }
+      else if(statement.hasOwnProperty('body')) {
+        statement = statement.body;
       }
       return statement;
     }
 
     function rollUp() {
       if(indexes.length === 1) {
-        var parentArray = testCode;
+        var parentArray = newTestCode;
       }
       else {
         var tmpArray = indexes.slice(0, -1);
