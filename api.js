@@ -1,3 +1,4 @@
+//Check if the current statement creates new block scope
 function newBlock(statement) {
   if(statement.hasOwnProperty('body')) {
     return statement.body;
