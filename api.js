@@ -10,6 +10,14 @@ function newBlock(statement) {
 }
 
 module.exports = {
+  /**
+  * @desc mustContain() Checks if a code tree contains all the functionality in a given array
+  *
+  * @param {json} [codeTree] - Code you'd like to test against in ESTree AST format
+  * @param {array} [functionality] - Array of builder objects you'd like to check the code for
+  *
+  * @return {bool} - True IFF the code contains ALL the listed functionality
+  */
   mustContain: function(codeTree, functionality) {
     function searchForFunctionality(code) {
       //Go through each statement
@@ -42,6 +50,14 @@ module.exports = {
     return false;
   },
 
+  /**
+  * @desc cantContain() Checks if a code tree contains any of the functionality in a given array
+  *
+  * @param {json} [codeTree] - Code you'd like to test against in ESTree AST format
+  * @param {array} [functionality] - Array of builder objects you'd like to check the code for
+  *
+  * @return {bool} - True IFF the code contains NONE the listed functionality
+  */
   cantContain: function(codeTree, functionality) {
     function searchForFunctionality(code) {
       //Go through each statement
@@ -69,10 +85,21 @@ module.exports = {
     return searchForFunctionality(codeTree);
   },
 
+  /**
+  * @desc matchesStructure() Checks if one block of code contains the same structure as another
+  *
+  * @param {json} [userCode] - Code which must contain a certain structure ESTree AST format
+  * @param {json} [testCode] - Code used to match the structure of the other block of code ESTree AST format
+  *
+  * @return {bool} - True if userCode is a superset of testCode (extra statments in userCode don't matter)
+  */
   matchesStructure: function(userCode, testCode) {
+    //The indexes variable stores an array of which statment number we're current inspecting at each level of the tree
     var indexes = [0];
+    //This normailizes the code to test against so traversing it doesn't have a weird edge condition at the beginning
     var newTestCode = {body: testCode};
 
+    //Takes a portion of our index list and returns a portion of the code tree
     function getStatemntAt(indexList) {
       var statement = newTestCode.body.body;
       for(var a=0; a<indexList.length; a++) {
@@ -87,6 +114,7 @@ module.exports = {
       return statement;
     }
 
+    //Take a portion of our index list and returns an array of statements
     function getArrayAt(indexList) {
       var statement = newTestCode;
       for(var a=0; a<(indexList.length-1); a++) {
@@ -107,7 +135,9 @@ module.exports = {
       return statement;
     }
 
+    //Try advancing our internal index counters
     function rollUp() {
+      //If we're at the root of the tree
       if(indexes.length === 1) {
         var parentArray = newTestCode;
       }
@@ -115,10 +145,12 @@ module.exports = {
         var tmpArray = indexes.slice(0, -1);
         var parentArray = getArrayAt(tmpArray);
       }
+      //If we can advance to the next sibling
       if(parentArray.body.length > (indexes[indexes.length-1]+1)) {
         indexes[indexes.length-1]++;
         return false;
       }
+      //If we need to advance the parent instead
       else {
         indexes.pop();
         if(indexes.length === 0) {
@@ -128,6 +160,7 @@ module.exports = {
       }
     }
 
+    //Continue traversing the tree, either to the next child, sibling, or up to the parent (then down again later if applicable)
     function advanceCurrentStatement() {
       //Check if we can go further down the tree
       var currentStatement = getStatemntAt(indexes);
@@ -156,6 +189,7 @@ module.exports = {
           return searchForFunctionality(newBlock(uCode.body[i]));
         }
       }
+      //If we reached this point we hit a dead end and have to backtrack :(
       indexes.pop();
       return false;
     }
