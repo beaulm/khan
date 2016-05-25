@@ -69,11 +69,11 @@
 			<form id="settings" name="settings">
 				<div id="mustContainStatus" class="resultIndicator"></div>
 				<label for="mustContain">Must contain:</label>
-				<input id="mustContain" class="inputElement" name="mustContain" type="text" placeholder="VariableDeclaration,IfStatement" size="52" /> <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API#Builder_objects" title="Support for any https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API#Builder_objects in a commas separated list(without spaces)">?</a>
+				<input id="mustContain" class="inputElement" name="mustContain" type="text" placeholder="VariableDeclaration,IfStatement" size="52" /> <a href="https://github.com/estree/estree/blob/master/spec.md" title="Support for any https://github.com/estree/estree/blob/master/spec.md in a commas separated list(without spaces)">?</a>
 				<br />
 				<div id="cantContainStatus" class="resultIndicator"></div>
 				<label for="cantContain">Can't contain:</label>
-				<input id="cantContain" class="inputElement" name="cantContain" type="text" placeholder="WhileStatement" size="52" /> <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API#Builder_objects" title="Support for any https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API#Builder_objects in a commas separated list(without spaces)">?</a>
+				<input id="cantContain" class="inputElement" name="cantContain" type="text" placeholder="WhileStatement" size="52" /> <a href="https://github.com/estree/estree/blob/master/spec.md" title="Support for any https://github.com/estree/estree/blob/master/spec.md in a commas separated list(without spaces)">?</a>
 				<br />
 				<div id="matchesStructureStatus" class="resultIndicator"></div>
 				<label for="matchesStructure">Match structure:</label>
@@ -86,7 +86,7 @@ for(var i=0; i&lt;10; i++) {
 				</textarea>
 			</form>
 			<p>After you enter valid javascript in the text area on the left, your code will instantly be checked against the conditions above and indicators will show the result.</p>
-			<p>"Must contain" and "Can't contain" can be any valid <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API#Builder_objects" target="_blank">builder objects</a>, in the form of a comma separated list with no spaces.</p>
+			<p>"Must contain" and "Can't contain" can be any valid <a href="https://github.com/estree/estree/blob/master/spec.md" target="_blank">ESTree AST node types</a>, in the form of a comma separated list with no spaces.</p>
 			<p><strong>Good:</strong> VariableDeclaration,IfStatement<br /><strong>Bad:</strong> VariableDeclaration, IfStatement</p>
 			<p>"Match structure" will check if the code you entered on the left is a superset of the code in the textarea. It's not perfect yet ;)</p>
 		</div>
