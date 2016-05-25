@@ -10,13 +10,13 @@ editor.getSession().setMode('ace/mode/javascript');
 editor.setTheme('ace/theme/monokai');
 
 function checkCode(){
-  document.getElementsByClassName('resultIndicator').className = 'resultIndicator';
   var checks = {
     mustContain: function(){return api.mustContain(esprima.parse(editor.getValue()), document.getElementById('mustContain').value.split())},
     cantContain: function(){return api.cantContain(esprima.parse(editor.getValue()), document.getElementById('cantContain').value.split())},
     matchesStructure: function(){return api.matchesStructure(esprima.parse(editor.getValue()), esprima.parse(document.getElementById('matchesStructure').value))}
   };
   for(var key in checks) {
+    document.getElementById(key+'Status').className = 'resultIndicator';
     if(checks.hasOwnProperty(key) && document.getElementById(key).value !== '') {
       if(checks[key]()) {
         document.getElementById(key+'Status').className += ' passing';
