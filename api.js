@@ -1,3 +1,4 @@
+'use strict';
 var esprima = require('esprima');
 
 //Check if the current statement creates new block scope
