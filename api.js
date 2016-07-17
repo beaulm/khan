@@ -40,7 +40,7 @@ module.exports = {
     var treeString = JSON.stringify(codeTree);
 
     //Go through each piece of functionality that must exist in the code
-    for(var i=0, sizeOfFunctionalityList=functionality.length; i<sizeOfFunctionalityList; i++) {
+    for(var i=0; i<functionality.length; i++) {
       //If the current functionality isn't in the code
       if(treeString.indexOf(functionality[i]) === -1) {
         return false;
