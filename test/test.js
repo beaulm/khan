@@ -48,13 +48,14 @@ describe('Api', function() {
       assert.equal(true, api.matchesStructure('for(var i=0;i<10;i++){if(1==1){var a=0}}', 'for(var i=0;i<10;i++){if(1==1){var a=0}}'));
       assert.equal(true, api.matchesStructure('var a=function(){}', 'var a=function(){}'));
       assert.equal(true, api.matchesStructure('var a=1;var b=function(){var c=2;};', 'var a=1;var b=function(){var c=2;};'));
+      assert.equal(true, api.matchesStructure('function a() {if(1==1) {var b = 1;}}', 'function a() {if(1==1) {var b = 1;}}'));
     });
     it('should return false if the supplied code doesn\'t match the structure of the test code', function () {
       assert.equal(false, api.matchesStructure('var a=1;', 'if(1==1){}'));
       assert.equal(false, api.matchesStructure('var a=1;if(1==1){}', 'if(1==1){}var a=1;'));
       assert.equal(false, api.matchesStructure('var a=1;if(1==1){}', 'if(1==1){var a=1;}'));
       assert.equal(false, api.matchesStructure('var a=1;if(1==1){var b=2;var c=3;}var d=4', 'if(1==1){if(2==2){var a=1;}}'));
-      // assert.equal(false, api.matchesStructure('var a=1;var b=function(){};', 'var a=1;var b=function(){var c=2;};'));
+      assert.equal(false, api.matchesStructure('function a() {var b = 1;}', 'function a() {if(1==1) {var b = 1;}}'));
     });
     it('should return false if the input is bad', function () {
       assert.equal(false, api.matchesStructure('var a=1;', []));

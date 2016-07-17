@@ -9,6 +9,9 @@ function newBlock(statement) {
   if(statement.hasOwnProperty('consequent') && statement.consequent.hasOwnProperty('type') && statement.consequent.type === 'BlockStatement' && statement.consequent.hasOwnProperty('body')) {
     return statement.consequent;
   }
+  if(statement.hasOwnProperty('declarations') && statement.declarations[0].hasOwnProperty('init') && statement.declarations[0].init.hasOwnProperty('body') && statement.declarations[0].init.body.hasOwnProperty('type') && statement.declarations[0].init.body.type === 'BlockStatement' && statement.declarations[0].init.body.hasOwnProperty('body')) {
+    return statement.declarations[0].init.body;
+  }
   return false;
 }
 
@@ -102,7 +105,7 @@ module.exports = {
       return false;
     }
 
-    //The indexes variable stores an array of which statment number we're current inspecting at each level of the tree
+    //The indexes variable stores an array of which statment number we're currently inspecting at each level of the tree
     var indexes = [0];
     //This normailizes the code to test against so traversing it doesn't have a weird edge condition at the beginning
     var newTestCode = {body: testCode};
@@ -111,11 +114,10 @@ module.exports = {
     function getStatemntAt(indexList) {
       var statement = newTestCode.body.body;
       for(var a=0; a<indexList.length; a++) {
-        if(statement.hasOwnProperty('consequent')) {
-          statement = statement.consequent.body;
-        }
-        else if(statement.hasOwnProperty('body')) {
-          statement = statement.body.body;
+        //If the current functionality creates new block scope
+        if(newBlock(statement) !== false) {
+          statement = newBlock(statement);
+          statement = statement.body;
         }
         statement = statement[indexList[a]];
       }
@@ -126,19 +128,16 @@ module.exports = {
     function getArrayAt(indexList) {
       var statement = newTestCode;
       for(var a=0; a<(indexList.length-1); a++) {
-        if(statement.hasOwnProperty('consequent')) {
-          statement = statement.consequent.body;
-        }
-        else if(statement.hasOwnProperty('body')) {
-          statement = statement.body.body;
+        //If the current functionality creates new block scope
+        if(newBlock(statement) !== false) {
+          statement = newBlock(statement);
+          statement = statement.body;
         }
         statement = statement[indexList[a]];
       }
-      if(statement.hasOwnProperty('consequent')) {
-        statement = statement.consequent;
-      }
-      else if(statement.hasOwnProperty('body')) {
-        statement = statement.body;
+      //If the current functionality creates new block scope
+      if(newBlock(statement) !== false) {
+        statement = newBlock(statement);
       }
       return statement;
     }
