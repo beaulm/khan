@@ -33,35 +33,18 @@ module.exports = {
       return false;
     }
 
-    function searchForFunctionality(code) {
-      //Go through each statement
-      code.body.forEach(function(statement){
-        //Go through the list of functionality that still needs to be found
-        functionality = functionality.filter(function(specificFunctionality){
-          //If the current statment matches the current functionality
-          if(statement.type === specificFunctionality) {
-            //Remove it from the list of functionality we still need to find
-            return false;
-          }
-          return true;
-        });
+    //Turn the code tree into a string
+    var treeString = JSON.stringify(codeTree);
 
-        //If the current functionality creates new block scope
-        if(newBlock(statement) !== false) {
-          searchForFunctionality(newBlock(statement));
-        }
-      });
+    //Go through each piece of functionality that must exist in the code
+    for(var i=0, sizeOfFunctionalityList=functionality.length; i<sizeOfFunctionalityList; i++) {
+      //If the current functionality isn't in the code
+      if(treeString.indexOf(functionality[i]) === -1) {
+        return false;
+      }
     }
 
-    searchForFunctionality(codeTree);
-
-    //If the list of functionality still to find is zero
-    if(functionality.length === 0) {
-      //Return true (we found everything!)
-      return true;
-    }
-    //Otherwise return false (we didn't find everything :( )
-    return false;
+    return true;
   },
 
   /**
@@ -84,32 +67,18 @@ module.exports = {
       return false;
     }
 
-    function searchForFunctionality(code) {
-      //Go through each statement
-      var numberOfStatements = code.body.length;
-      for(var i=0; i<numberOfStatements; i++) {
-        //Go through the list of banned functionality
-        var sizeOfFunctionalityList = functionality.length;
-        for(var j=0; j<sizeOfFunctionalityList; j++) {
-          //If the current statment matches the current functionality
-          if(code.body[i].type === functionality[j]) {
-            //Stop looking, we've found something
-            return false;
-          }
-        }
+    //Turn the code tree into a string
+    var treeString = JSON.stringify(codeTree);
 
-        //If the current functionality creates new block scope
-        if(newBlock(code.body[i]) !== false) {
-          if(!searchForFunctionality(newBlock(code.body[i]))) {
-            return false;
-          }
-        }
+    //Go through each piece of functionality that must not exist in the code
+    for(var i=0, sizeOfFunctionalityList=functionality.length; i<sizeOfFunctionalityList; i++) {
+      //If the current functionality is in the code tree somewhere
+      if(treeString.indexOf(functionality[i]) !== -1) {
+        return false;
       }
-
-      return true;
     }
 
-    return searchForFunctionality(codeTree);
+    return true;
   },
 
   /**
