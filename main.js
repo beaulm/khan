@@ -13,8 +13,8 @@ editor.setTheme('ace/theme/monokai');
 function checkCode(){
   try {
     var checks = {
-      mustContain: function(){return api.mustContain(editor.getValue(), document.getElementById('mustContain').value.split(','))},
-      cantContain: function(){return api.cantContain(editor.getValue(), document.getElementById('cantContain').value.split(','))},
+      mustContain: function(){return api.mustContain(editor.getValue(), document.getElementById('mustContain').value.replace(/ /g, '').split(','))},
+      cantContain: function(){return api.cantContain(editor.getValue(), document.getElementById('cantContain').value.replace(/ /g, '').split(','))},
       matchesStructure: function(){return api.matchesStructure(editor.getValue(), document.getElementById('matchesStructure').value)}
     };
     for(var key in checks) {
