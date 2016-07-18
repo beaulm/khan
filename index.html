@@ -5,87 +5,88 @@
 		<title>Khan Academy Take-home test</title>
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    <style media="screen">
-			html, body {
-				color: #2D2E2E;
-				font-family: "Trebuchet MS", Geneva, Tahoma, Arial, sans-serif;
-				font-size: small;
-				height: 100%;
-				line-height: 1.8;
-				margin: auto;
-				width: 100%;
-			}
+		<style media="screen">
+				html, body {
+					color: #2D2E2E;
+					font-family: "Trebuchet MS", Geneva, Tahoma, Arial, sans-serif;
+					font-size: small;
+					height: 100%;
+					line-height: 1.8;
+					margin: auto;
+					width: 100%;
+				}
 
-      #editor {
-				float: left;
-        height: 90%;
-				margin: 1.38em 1.23em 2.08em 1.23em;
-        position: relative;
-        width: 45%;
-      }
+				#editor {
+					float: left;
+					height: 90%;
+					margin: 1.38em 1.23em 2.08em 1.23em;
+					position: relative;
+					width: 45%;
+				}
 
-			#results {
-				float: left;
-				margin: 1.38em 1.23em 2.08em 1.23em;
-				width: 45%;
-			}
+				#matchesStructure {
+					height: 231px;
+					width: 421px;
+				}
 
-			.resultIndicator {
-				-moz-border-radius: 1.77em;
-			  -webkit-border-radius: 1.77em;
-			  border-radius: 1.77em;
-				float: left;
-				height: 1.77em;
-				margin-right: .5em;
-				width: 1.77em;
-			}
+				#results {
+					float: left;
+					margin: 1.38em 1.23em 2.08em 1.23em;
+					width: 45%;
+				}
 
-			.failing {
-				background-color: #F00;
-			}
+				.resultIndicator {
+					-moz-border-radius: 1.77em;
+					-webkit-border-radius: 1.77em;
+					border-radius: 1.77em;
+					float: left;
+					height: 1.77em;
+					margin-right: .5em;
+					width: 1.77em;
+				}
 
-			.passing {
-				background-color: #0F0;
-			}
+				.failing {
+					background-color: #F00;
+				}
 
-			#results label {
-				display: block;
-				float: left;
-				width: 9em;
-			}
+				.passing {
+					background-color: #0F0;
+				}
 
-			#results input {
-				margin-bottom: 3em;
-			}
-    </style>
+				#results label {
+					display: block;
+					float: left;
+					width: 9em;
+				}
+
+				#results input {
+					margin-bottom: 3em;
+				}
+		</style>
 	</head>
 	<body>
-    <div id="editor"></div>
+		<div id="editor"></div>
 		<div id="results">
 			<form id="settings" name="settings">
 				<div id="mustContainStatus" class="resultIndicator"></div>
 				<label for="mustContain">Must contain:</label>
-				<input id="mustContain" class="inputElement" name="mustContain" type="text" placeholder="VariableDeclaration,IfStatement" size="52" /> <a href="https://github.com/estree/estree/blob/master/spec.md" title="Support for any https://github.com/estree/estree/blob/master/spec.md in a commas separated list(without spaces)">?</a>
+				<input id="mustContain" class="inputElement" name="mustContain" type="text" placeholder="VariableDeclaration,IfStatement" size="52" /> <a href="https://github.com/estree/estree/blob/master/spec.md" title="Support for any https://github.com/estree/estree/blob/master/spec.md in a commas separated list">?</a>
 				<br />
 				<div id="cantContainStatus" class="resultIndicator"></div>
 				<label for="cantContain">Can't contain:</label>
-				<input id="cantContain" class="inputElement" name="cantContain" type="text" placeholder="WhileStatement" size="52" /> <a href="https://github.com/estree/estree/blob/master/spec.md" title="Support for any https://github.com/estree/estree/blob/master/spec.md in a commas separated list(without spaces)">?</a>
+				<input id="cantContain" class="inputElement" name="cantContain" type="text" placeholder="WhileStatement" size="52" /> <a href="https://github.com/estree/estree/blob/master/spec.md" title="Support for any https://github.com/estree/estree/blob/master/spec.md in a commas separated list">?</a>
 				<br />
 				<div id="matchesStructureStatus" class="resultIndicator"></div>
 				<label for="matchesStructure">Match structure:</label>
-				<textarea id="matchesStructure" class="inputElement" name="matchesStructure" rows="15" cols="50">
-for(var i=0; i&lt;10; i++) {
+				<div id="matchesStructure" class="inputElement" name="matchesStructure">for(var i=0; i&lt;10; i++) {
 	if(i==7) {
 		console.log(&#39;We found the lucky number&#39;);
 	}
-}
-				</textarea>
+}</div>
 			</form>
 			<p>After you enter valid javascript in the text area on the left, your code will instantly be checked against the conditions above and indicators will show the result.</p>
-			<p>"Must contain" and "Can't contain" can be any valid <a href="https://github.com/estree/estree/blob/master/spec.md" target="_blank">ESTree AST node types</a>, in the form of a comma separated list with no spaces.</p>
-			<p><strong>Good:</strong> VariableDeclaration,IfStatement<br /><strong>Bad:</strong> VariableDeclaration, IfStatement</p>
 			<p>"Match structure" will check if the code you entered on the left is a superset of the code in the textarea. It's not perfect yet ;)</p>
 		</div>
-    <script src="./bundle.js"></script>
+		<script src="./bundle.js"></script>
 	</body>
 </html>

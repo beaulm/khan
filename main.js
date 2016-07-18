@@ -9,13 +9,18 @@ var editor = ace.edit('editor');
 editor.getSession().setMode('ace/mode/javascript');
 editor.setTheme('ace/theme/monokai');
 
+//Make the matchesStructure input fancy too
+var matchesStructureInput = ace.edit('matchesStructure');
+matchesStructureInput.getSession().setMode('ace/mode/javascript');
+matchesStructureInput.setTheme('ace/theme/monokai');
+
 //Run all the tests against the current code
 function checkCode(){
   try {
     var checks = {
       mustContain: function(){return api.mustContain(editor.getValue(), document.getElementById('mustContain').value.replace(/ /g, '').split(','))},
       cantContain: function(){return api.cantContain(editor.getValue(), document.getElementById('cantContain').value.replace(/ /g, '').split(','))},
-      matchesStructure: function(){return api.matchesStructure(editor.getValue(), document.getElementById('matchesStructure').value)}
+      matchesStructure: function(){return api.matchesStructure(editor.getValue(), matchesStructureInput.getValue())}
     };
     for(var key in checks) {
       //Reset the status indicator
@@ -36,8 +41,9 @@ function checkCode(){
   }
 }
 
-//After the user has started typing in the editor and then stopped for 811 milliseconds, check the code
+//After the user has started typing in an editor and then stopped for 811 milliseconds, check the code
 editor.getSession().on('change', debounce(checkCode, 811));
+matchesStructureInput.getSession().on('change', debounce(checkCode, 811));
 
 //After the user has started typing in a form field and then stopped for 811 milliseconds, check the code
 [].forEach.call(document.getElementsByClassName('inputElement'), function(element){
